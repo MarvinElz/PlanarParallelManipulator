@@ -1,0 +1,3 @@
+/*
+    liefert aktuelle Position der Winkel an das Hauptprogramm
+*/
