@@ -2,13 +2,15 @@
     liefert aktuelle Position der Winkel an das Hauptprogramm
     ueber shared-memory
     Ablaufsteuerung über Zustandsautomaten
+    g++ encoder.c -std=c++0x -o encoder -pthread -lwiringPi
 */
 
 #include "shrd_mem.h"
 #include "encoder.h"
-#include <stdio>
 #include <wiringPi.h>
 #include <thread>
+#include <iostream>
+#include <unistd.h>  // usleep()
 
 using namespace std;
 
@@ -19,9 +21,9 @@ struct Zustand{
 
 Zustand Automat[4] = {  
         {  1, { 0, 1, 2, 3 } },   // rechtsdrehung
-				{  0, { 0, 1, 2, 3 } },   // linksdrehung
-				{  1, { 1, 0, 3, 2 } },   // rechtsdrehung
-				{  0, { 1, 0, 3, 2 } } }; // linksdrehung
+	{  0, { 0, 1, 2, 3 } },   // linksdrehung
+	{  1, { 1, 0, 3, 2 } },   // rechtsdrehung
+	{  0, { 1, 0, 3, 2 } } }; // linksdrehung
 
 struct Encoder{
   char state;
@@ -39,25 +41,26 @@ encoder enc;
 
 int init(int enc_Number){
   if( enc_Number == 1 )  
-     enc = { 0, 0, 0, enc1_a, enc1_b, 0, 1, phi_b_offset};
+     enc = { 0, 0, 0, enc1_a, enc1_b, 0, 1, offset_phi_b};
   if( enc_Number == 2 )   
-     enc = { 0, 0, 0, enc2_a, enc2_b, 0, 2, phi_c_offset };
+     enc = { 0, 0, 0, enc2_a, enc2_b, 0, 2, offset_phi_c };
 	pinMode ( enc.a, INPUT );
 	pinMode ( enc.b, INPUT );
   
 }
 
 void update(){
+   cout << "update anfang" << endl;
    long *phi;
    shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
    
    phi = (long *)((char *)shared_mem + enc.offset );  // Pointer auf shared_mem + offset = Pointer auf phi_b, bzw. phi_b
-   if( *phi == 0 ) 
-      enc.angle = 0;
-   else
-      *phi = enc.angle;   
-   
+   if( *phi > 1920 || *phi < -1920 )  // Rücksetzimpuls
+      enc.angle = 0;   
+   *phi = enc.angle;   
    shmdt(shared_mem); 
+   cout << "update ende" << endl;
+   
 }
 
 int main( int argc, const char* argv[] ){
@@ -70,6 +73,7 @@ int main( int argc, const char* argv[] ){
      cout << "Parameter konnte nicht gelesen werden" << endl;
      return 2;
    }
+   cout << "Encoder Nr.: " << enc_Number << endl;
 
    wiringPiSetup();
    init( enc_Number );
@@ -87,8 +91,9 @@ int main( int argc, const char* argv[] ){
          else
             enc.angle--;  
 
-         std::thread t1( update );          
-         // TODO: call thread  
+         cout << "starte thread" << endl;
+	 new thread( update );
+         
       }
       usleep(10);
    }
