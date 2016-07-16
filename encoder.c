@@ -20,7 +20,7 @@ struct Zustand{
 } typedef Zustand;
 
 Zustand Automat[4] = {  
-        {  1, { 0, 1, 2, 3 } },   // rechtsdrehung
+  {  1, { 0, 1, 2, 3 } },   // rechtsdrehung
 	{  0, { 0, 1, 2, 3 } },   // linksdrehung
 	{  1, { 1, 0, 3, 2 } },   // rechtsdrehung
 	{  0, { 1, 0, 3, 2 } } }; // linksdrehung

@@ -18,7 +18,7 @@ int main(){
 
   while(1){
      shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
-     cout << "phi_b: " << shared_mem->phi_b << "  , phi_c: " << shared_mem->phi_c << endl;
+     cout << "phi_b: " << shared_mem->phi_b << "  , phi_c: " << shared_mem->phi_c << endl;     
      shmdt(shared_mem);
      usleep(1000000);     
   }
