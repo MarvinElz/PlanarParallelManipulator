@@ -6,7 +6,11 @@
 
 #include "shrd_mem.h"
 #include "encoder.h"
+#include <stdio>
 #include <wiringPi.h>
+#include <thread>
+
+using namespace std;
 
 struct Zustand{		
 	char outValue;
@@ -19,57 +23,75 @@ Zustand Automat[4] = {
 				{  1, { 1, 0, 3, 2 } },   // rechtsdrehung
 				{  0, { 1, 0, 3, 2 } } }; // linksdrehung
 
-char Enc1_state = 0;
-char Enc1_input;		// interpretiertes Einlesen [0..3]
-char Enc1_input_old;   // wird benötigt für Haltepositionen, Ausgabe nur bei Änderung
+struct Encoder{
+  char state;
+  char input;
+  char input_old;
+  char a;
+  char b;
+  long angle; 
+  char number;
+} typedef encoder;
 
-char Enc2_state = 0;
-char Enc2_input;    // interpretiertes Einlesen [0..3]
-char Enc2_input_old;   // wird benötigt für Haltepositionen, Ausgabe nur bei Änderung
+encoder enc;
 
 
-int init(){
-	pinMode ( enc1_a, INPUT );
-	pinMode ( enc1_b, INPUT );
-  pinMode ( enc2_a, INPUT );
-  pinMode ( enc2_b, INPUT );
+int init(int enc_Number){
+  if( enc_Number == 1 )  
+     enc = { 0, 0, 0, enc1_a, enc1_b, 0, 1};
+  if( enc_Number == 2 )   
+     enc = { 0, 0, 0, enc2_a, enc2_b, 0, 2 };
+	pinMode ( enc.a, INPUT );
+	pinMode ( enc.b, INPUT );
+  
+}
+
+void update(){
+   shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
+   if( enc.number == 1 ){  // Encoder Nummer 1
+      if( shared_mem->phi_b == 0 )          
+         enc.angle = 0;     // Winiel wurde zurückgesetzt
+      else
+         shared_mem->phi_b = enc.angle;
+   }
+   if( enc.number == 2 ){  // Encoder Nummer 2
+     if( shared_mem->phi_c == 0 )          
+         enc.angle = 0;     // Winiel wurde zurückgesetzt
+      else
+         shared_mem->phi_c = enc.angle;
+   }
+   shmdt(shared_mem); 
 }
 
 int main( int argc, const char* argv[] ){
+   int enc_Number;
+   if( argc < 2 ){
+      cout << "Bitte mindestens einen Parameter übergeben zur Auswahl des Encoders" << endl;
+      return 1;  // mindestens ein Parameter muss übergeben werden
+    }
+   if (sscanf (argv[1], "%i", &enc_Number)!=1){
+     cout << "Parameter konnte nicht gelesen werden" << endl;
+     return 2;
+   }
 
    wiringPiSetup();
+   init( enc_Number );
    shared_mem_id = shmget(SMkey, SMsize, 0666);
 
    while(1){
 
-      Enc1_input = digitalRead( enc1_a ) << 1 | digitalRead( enc1_b );       
-      if (Enc1_input != Enc1_input_old){    // wenn Änderung stattgefunden hat
-         Enc1_input_old = Enc1_input;       // Eingabe speichern für Abgleich    
-         Enc1_state = Automat[Enc1_state].ai[Enc1_input]; // neuer Zustand wird aus dem Automaten ermittelt      
-          
-         shared_mem = (shared_mem_struct*)shmat(shID, 0, 0);  // Zugriff auf shared memory bekommen
-         if( Automat[Enc1_state].outValue )
-            shared_mem->phi_b++;
+      enc.input = digitalRead( enc.a ) << 1 | digitalRead( enc.b );       
+      if (enc.input != enc.input_old){    // wenn Änderung stattgefunden hat
+         enc.input_old = enc.input;       // Eingabe speichern für Abgleich    
+         enc.state = Automat[enc.state].ai[enc.input]; // neuer Zustand wird aus dem Automaten ermittelt              
+                  
+         if( Automat[enc.state].outValue )
+            enc.angle++;        
          else
-            shared_mem->phi_b--;
-         shmdt(shared_mem);
+            enc.angle--;  
+            
+         std::thread t1( update );          
+         // TODO: call thread  
       }
-
-
-      Enc2_input = digitalRead( enc2_a ) << 1 | digitalRead( enc2_b );       
-      if (Enc2_input != Enc2_input_old){    // wenn Änderung stattgefunden hat
-         Enc2_input_old = Enc2_input;       // Eingabe speichern für Abgleich    
-         Enc2_state = Automat[Enc2_state].ai[Enc2_input]; // neuer Zustand wird aus dem Automaten ermittelt      
-          
-         shared_mem = (shared_mem_struct*)shmat(shID, 0, 0);  // Zugriff auf shared memory bekommen
-         if( Automat[Enc2_state].outValue )
-            shared_mem->phi_c++;
-         else
-            shared_mem->phi_c--;
-         shmdt(shared_mem);
-      }
-      
-
-
    }
 }
