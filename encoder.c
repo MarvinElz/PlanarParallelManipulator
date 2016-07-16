@@ -31,6 +31,7 @@ struct Encoder{
   char b;
   long angle; 
   char number;
+  int offset; // Zugriff auf phi_b, bzw. phi_c
 } typedef encoder;
 
 encoder enc;
@@ -38,28 +39,24 @@ encoder enc;
 
 int init(int enc_Number){
   if( enc_Number == 1 )  
-     enc = { 0, 0, 0, enc1_a, enc1_b, 0, 1};
+     enc = { 0, 0, 0, enc1_a, enc1_b, 0, 1, phi_b_offset};
   if( enc_Number == 2 )   
-     enc = { 0, 0, 0, enc2_a, enc2_b, 0, 2 };
+     enc = { 0, 0, 0, enc2_a, enc2_b, 0, 2, phi_c_offset };
 	pinMode ( enc.a, INPUT );
 	pinMode ( enc.b, INPUT );
   
 }
 
 void update(){
+   long *phi;
    shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
-   if( enc.number == 1 ){  // Encoder Nummer 1
-      if( shared_mem->phi_b == 0 )          
-         enc.angle = 0;     // Winiel wurde zurückgesetzt
-      else
-         shared_mem->phi_b = enc.angle;
-   }
-   if( enc.number == 2 ){  // Encoder Nummer 2
-     if( shared_mem->phi_c == 0 )          
-         enc.angle = 0;     // Winiel wurde zurückgesetzt
-      else
-         shared_mem->phi_c = enc.angle;
-   }
+   
+   phi = (long *)((char *)shared_mem + enc.offset );  // Pointer auf shared_mem + offset = Pointer auf phi_b, bzw. phi_b
+   if( *phi == 0 ) 
+      enc.angle = 0;
+   else
+      *phi = enc.angle;   
+   
    shmdt(shared_mem); 
 }
 
@@ -89,9 +86,10 @@ int main( int argc, const char* argv[] ){
             enc.angle++;        
          else
             enc.angle--;  
-            
+
          std::thread t1( update );          
          // TODO: call thread  
       }
+      usleep(10);
    }
 }
