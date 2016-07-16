@@ -1,20 +1,23 @@
 /*
    
 
-
+   g++ motor.c -std=c++0x -o motor -pthread -lwiringPi
 */
 
 #include "shrd_mem.h"
+#include "motor.h"
 #include <wiringPi.h>
 #include <thread>
 #include <iostream>
 #include <unistd.h>  // usleep()
 
+using namespace std;
+
 struct Motor{
 	unsigned char speed;
 	char dir;
 	char sleep;
-} typdef motor;
+} typedef motor;
 
 struct PINS{
 	int step;
@@ -23,7 +26,7 @@ struct PINS{
 	char mot_number;
 } typedef PINS;
 
-motor mot = {0, 0, 0};
+volatile motor mot = {0, 0, 0};
 PINS  pins;
 
 void init( int number ){
@@ -31,25 +34,24 @@ void init( int number ){
       pins = { PIN_mot1_step, PIN_mot1_dir, PIN_mot1_sleep, 1 };	
    else
       pins = { PIN_mot2_step, PIN_mot2_dir, PIN_mot2_sleep, 2 };
-   pinMode ( pins.step , Output );
-   pinMode ( pins.dir  , Output );
-   pinMode ( pins.sleep, Output );
+   pinMode ( pins.step , OUTPUT );
+   pinMode ( pins.dir  , OUTPUT );
+   pinMode ( pins.sleep, OUTPUT );
 }
 
 
 void run(){
-  // unsigned long delta;
+   unsigned long delta;
    while(1){   	  
-  /*	  if( speed != 0 ){
+      if( mot.speed != 0 ){
+         delta = 200000 / mot.speed;      // speed [0..100] -> f = 2.5Hz .. 250Hz
          digitalWrite( pins.step , LOW );
-         usleep( 1000000 / mot.speed );  // speed [0..100] -> f = 0.5Hz .. 50Hz
+         usleep( delta );  
          digitalWrite( pins.step, HIGH );
-         usleep( 1000000 / mot.speed );
+         usleep( delta );
       }else
          usleep(1000);     
-         */
-      cout << mot.speed << endl;   
-      usleep(1000000);    
+                    
    }
 } 
 
@@ -71,10 +73,10 @@ int main( int argc, const char* argv[] ){
    std::thread go(run);
 
    while(1){
-   	  //TODO: 
-      sleep(100);
-      mot.speed++;
-
+      sleep(1);      
+      if( mot.speed < 100 )
+	 mot.speed++;
+      cout << (int)mot.speed << endl;
    }
 
 }
