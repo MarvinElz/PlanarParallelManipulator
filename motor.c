@@ -28,17 +28,19 @@ struct PINS{
 	char mot_number;
 } typedef PINS;
 
-volatile motor mot; = {0, 0, 0};
+volatile motor mot = {0,0,0,0,0};
 PINS  pins;
 
 void init( int number ){
    if( number == 1 ){
       pins = { PIN_mot1_step, PIN_mot1_dir, PIN_mot1_sleep, 1 };	
-      mot = {0, 0, 0, offset_phi_b_soll, offset_phi_b};
+      mot.offset_phi_soll = offset_phi_b_soll;
+      mot.offset_phi_ist  = offset_phi_b;
    }
    else{
       pins = { PIN_mot2_step, PIN_mot2_dir, PIN_mot2_sleep, 2 };
-      mot = {0, 0, 0, offset_phi_c_soll, offset_phi_c};
+      mot.offset_phi_soll = offset_phi_c_soll;
+      mot.offset_phi_ist  = offset_phi_c;
    }      
    pinMode ( pins.step , OUTPUT );
    pinMode ( pins.dir  , OUTPUT );
@@ -79,7 +81,7 @@ int main( int argc, const char* argv[] ){
    shared_mem_id = shmget(SMkey, SMsize, 0666);
 
    std::thread go(run);
-
+   cout << "Thread gestartet" << endl;
    int *phi_soll;
    int *phi_ist;
 
@@ -87,10 +89,11 @@ int main( int argc, const char* argv[] ){
       shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
       phi_soll = (int *)((char *)shared_mem + mot.offset_phi_soll );  // Pointer auf shared_mem + offset = Pointer auf phi_b_soll, bzw. phi_c_soll
       phi_ist = (int *)((char *)shared_mem + mot.offset_phi_ist );  // Pointer auf shared_mem + offset = Pointer auf phi_b_soll, bzw. phi_c_soll
+      int delta = *phi_soll - *phi_ist;
       shmdt(shared_mem); 
       
       int dir;
-      int delta = *phi_soll - *phi_ist;
+      
       if( delta > 480 ){
          dir = 0;          // rechtserehung
          delta = 960 - delta;
@@ -111,7 +114,7 @@ int main( int argc, const char* argv[] ){
       mot.speed = delta;
       usleep(10000);  // 10ms warten
 
-
+      
 
    }
 
