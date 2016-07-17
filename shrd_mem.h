@@ -6,16 +6,16 @@
 
 
 struct shared_mem_struct{
-   long phi_b;          // Position Gelenk 1
-   long phi_c;          // Position Gelenk 2
-   long phi_b_soll;     // SollPosition Gelenk 1
-   long phi_c_soll;     // SollPosition Gelenk 2
+   int phi_b;          // Position Gelenk 1
+   int phi_c;          // Position Gelenk 2
+   int phi_b_soll;     // SollPosition Gelenk 1
+   int phi_c_soll;     // SollPosition Gelenk 2
 }typedef shared_mem_struct;
 
 #define offset_phi_b ( 0 )
-#define offset_phi_c ( sizeof( long ) )
-#define offset_phi_b_soll ( 2 * sizeof(long) )
-#define offset_phi_c_soll ( 3 * sizeof(long) )
+#define offset_phi_c ( sizeof( int ) )
+#define offset_phi_b_soll ( 2 * sizeof(int) )
+#define offset_phi_c_soll ( 3 * sizeof(int) )
 
 int shared_mem_id;               // shared-memory key
 shared_mem_struct *shared_mem;   // Pointer on shared_mem_struct
