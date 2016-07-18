@@ -14,11 +14,6 @@ struct shared_mem_struct{
    char licht_c;       // Lichtschrankensensor Gelenk c
 }typedef shared_mem_struct;
 
-#define offset_phi_b ( 0 )
-#define offset_phi_c ( sizeof( int ) )
-#define offset_phi_b_soll ( 2 * sizeof(int) )
-#define offset_licht_b ( 4 * sizeof(int) )
-#define offset_licht_c ( 4 * sizeof(int) + sizeof(char) )
 
 int shared_mem_id;               // shared-memory key
 shared_mem_struct *shared_mem;   // Pointer on shared_mem_struct
