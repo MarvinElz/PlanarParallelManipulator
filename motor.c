@@ -1,6 +1,6 @@
 /*
+   bekommt einen Sollwert und Istwert und regelt über die Geschwindigkeit
    
-
    g++ motor.c -std=c++0x -o motor -pthread -lwiringPi
 */
 
