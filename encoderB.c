@@ -45,13 +45,13 @@ int init( void ){
 
 void update(){
    cout << "update anfang" << endl;
-   int *phi;
+   int phi;
    shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
    
    phi = shared_mem->phi_b;  //
-   if( *phi > 960  )  // Rücksetzimpuls
+   if( phi > 960  )  // Rücksetzimpuls
       enc.angle = 0;   
-   *phi = enc.angle;   
+   phi = enc.angle;   
    shmdt(shared_mem); 
    cout << "update ende" << endl;
    
