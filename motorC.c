@@ -56,6 +56,27 @@ int main( int argc, const char* argv[] ){
    int *phi_soll;
    int *phi_ist;
 
+
+   // TODO: Kalibrierung
+   digitalWrite( PIN_mot2_dir, 0 );
+   mot.speed = 10;
+   char licht_schranke = 0;
+   do{  // wenn Ausleger schon über Lichtschranke steht
+      shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen 
+      licht_schranke = shared_mem->licht_c;
+      shmdt(shared_mem);
+      usleep(1000); 
+   }while( licht_schranke );
+   do{ // warte solange, bis Ausleger über Lichtschranke ist
+      shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen 
+      licht_schranke = shared_mem->licht_c;
+      shmdt(shared_mem);
+      usleep(100);
+   }while( !licht_schranke );   
+   met.speed = 0;
+   digitalWrite( PIN_mot2_dir, 1 );  
+
+
    while(1){
       shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
       
