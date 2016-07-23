@@ -1,6 +1,6 @@
-// g++ GUI.c -std=c++0x -o GUI 
+// g++ GUI.c -std=c++0x -o GUI -lQtGui -lQtCore
 
-#include <QtGui>
+#include <qapplication.h>
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(button1);
-    layout->addWidget(button2);
+    layout->addWidget(button2);i
 
     window->setLayout(layout);
     window->show();
