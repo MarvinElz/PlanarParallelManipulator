@@ -15,8 +15,7 @@ struct shared_mem_struct{
 }typedef shared_mem_struct;
 
 
-int shared_mem_id;               // shared-memory key
-shared_mem_struct *shared_mem;   // Pointer on shared_mem_struct
+
 
 #define SMkey 58120526
 #define SMsize sizeof(shared_mem_struct)

@@ -118,6 +118,9 @@
     <property name="text">
      <string>UP</string>
     </property>
+    <property name="autoRepeat">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="b_B_down">
     <property name="geometry">
@@ -130,6 +133,9 @@
     </property>
     <property name="text">
      <string>DOWN</string>
+    </property>
+    <property name="autoRepeat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="b_C_up">
@@ -144,6 +150,9 @@
     <property name="text">
      <string>UP</string>
     </property>
+    <property name="autoRepeat">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="b_C_down">
     <property name="geometry">
@@ -156,6 +165,9 @@
     </property>
     <property name="text">
      <string>DOWN</string>
+    </property>
+    <property name="autoRepeat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="Mani_up">

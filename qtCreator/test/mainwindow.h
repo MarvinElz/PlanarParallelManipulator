@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "worker.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -14,6 +15,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    Worker *worker;
 
 private slots:
     void on_b_reset_B_clicked();
@@ -28,8 +30,17 @@ private slots:
 
     void on_b_C_down_pressed();
 
+public slots:
+    void onphiBChanged(int);
+    void onphiCChanged(int);
+    void onphiBSollChanged(int);
+    void onphiCSollChanged(int);
+
 private:
     Ui::MainWindow *ui;
+    int shared_mem_id;
+    shared_mem_struct * shared_mem;
+
 };
 
 #endif // MAINWINDOW_H
