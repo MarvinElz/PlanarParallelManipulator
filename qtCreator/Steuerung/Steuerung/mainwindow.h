@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include "worker.h"
-#include "trajectory.h"
 #include <QMainWindow>
 #include <QListWidget>
 
