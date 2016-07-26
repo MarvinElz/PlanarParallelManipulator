@@ -15,10 +15,12 @@ QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    worker.cpp
+    worker.cpp \
+    trajectory.cpp
 
 HEADERS  += mainwindow.h \
     worker.h \
-    shrd_mem.h
+    shrd_mem.h \
+    trajectory.h
 
 FORMS    += mainwindow.ui
