@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,10 +36,12 @@ static const uint qt_meta_data_MainWindow[] = {
       78,   34,   34,   34, 0x08,
      100,   34,   34,   34, 0x08,
      120,   34,   34,   34, 0x08,
-     142,   34,   34,   34, 0x0a,
-     161,   34,   34,   34, 0x0a,
-     180,   34,   34,   34, 0x0a,
-     203,   34,   34,   34, 0x0a,
+     142,   34,   34,   34, 0x08,
+     168,   34,   34,   34, 0x08,
+     192,   34,   34,   34, 0x0a,
+     211,   34,   34,   34, 0x0a,
+     230,   34,   34,   34, 0x0a,
+     253,   34,   34,   34, 0x0a,
 
        0        // eod
 };
@@ -48,7 +50,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0on_b_reset_B_clicked()\0\0"
     "on_b_reset_C_clicked()\0on_b_B_up_pressed()\0"
     "on_b_B_down_pressed()\0on_b_C_up_pressed()\0"
-    "on_b_C_down_pressed()\0onphiBChanged(int)\0"
+    "on_b_C_down_pressed()\0on_pushButton_2_clicked()\0"
+    "on_pushButton_clicked()\0onphiBChanged(int)\0"
     "onphiCChanged(int)\0onphiBSollChanged(int)\0"
     "onphiCSollChanged(int)\0"
 };
@@ -65,10 +68,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->on_b_B_down_pressed(); break;
         case 4: _t->on_b_C_up_pressed(); break;
         case 5: _t->on_b_C_down_pressed(); break;
-        case 6: _t->onphiBChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 7: _t->onphiCChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 8: _t->onphiBSollChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 9: _t->onphiCSollChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->on_pushButton_2_clicked(); break;
+        case 7: _t->on_pushButton_clicked(); break;
+        case 8: _t->onphiBChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->onphiCChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 10: _t->onphiBSollChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->onphiCSollChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -106,9 +111,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }

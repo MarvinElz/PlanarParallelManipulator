@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include "worker.h"
+#include "trajectory.h"
 #include <QMainWindow>
+#include <QListWidget>
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +32,10 @@ private slots:
 
     void on_b_C_down_pressed();
 
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
+
 public slots:
     void onphiBChanged(int);
     void onphiCChanged(int);
@@ -40,7 +46,7 @@ private:
     Ui::MainWindow *ui;
     int shared_mem_id;
     shared_mem_struct * shared_mem;
-
+   // static void ThreadRun( QListWidget *list );
 };
 
 #endif // MAINWINDOW_H

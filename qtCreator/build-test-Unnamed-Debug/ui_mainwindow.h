@@ -13,9 +13,11 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QFrame>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
+#include <QtGui/QListWidget>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
@@ -48,6 +50,10 @@ public:
     QLineEdit *l_c_soll;
     QLabel *label_4;
     QLabel *label_5;
+    QListWidget *listWidget;
+    QPushButton *pushButton;
+    QPushButton *pushButton_2;
+    QFrame *line;
     QMenuBar *menuBar;
     QMenu *menuManipulator_Steuerung;
     QMenu *menuAbout;
@@ -129,6 +135,20 @@ public:
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(380, 310, 41, 16));
         label_5->setFont(font);
+        listWidget = new QListWidget(centralWidget);
+        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setGeometry(QRect(20, 30, 301, 341));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(190, 380, 81, 22));
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(70, 380, 81, 22));
+        line = new QFrame(centralWidget);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setGeometry(QRect(340, 10, 20, 521));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -171,6 +191,8 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "Ist", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("MainWindow", "Soll", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("MainWindow", "Stift", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "Start", 0, QApplication::UnicodeUTF8));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Load File", 0, QApplication::UnicodeUTF8));
         menuManipulator_Steuerung->setTitle(QApplication::translate("MainWindow", "Datei", 0, QApplication::UnicodeUTF8));
         menuAbout->setTitle(QApplication::translate("MainWindow", "About", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

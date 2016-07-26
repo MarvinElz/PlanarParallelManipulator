@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    worker.cpp
+    worker.cpp \
+    trajectory.cpp
 
 HEADERS  += mainwindow.h \
-    worker.h
+    worker.h \
+    trajectory.h
 
 FORMS    += mainwindow.ui
 
