@@ -132,3 +132,19 @@ void MainWindow::on_pushButton_clicked()
     Trajectory *traj = new Trajectory( ui->listWidget );
     traj->start();
 }
+
+void MainWindow::on_Mani_up_clicked()
+{
+    // Stift heben
+    shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
+    shared_mem->UP = 1;
+    shmdt(shared_mem);
+}
+
+void MainWindow::on_Mani_down_clicked()
+{
+    // Stift senken
+    shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
+    shared_mem->UP = 0;
+    shmdt(shared_mem);
+}

@@ -35,6 +35,10 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_Mani_up_clicked();
+
+    void on_Mani_down_clicked();
+
 public slots:
     void onphiBChanged(int);
     void onphiCChanged(int);

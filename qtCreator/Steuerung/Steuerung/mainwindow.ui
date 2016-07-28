@@ -23,6 +23,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Set</string>
     </property>
@@ -35,6 +40,11 @@
       <width>81</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Set</string>
@@ -115,6 +125,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>UP</string>
     </property>
@@ -130,6 +145,11 @@
       <width>81</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>DOWN</string>
@@ -147,6 +167,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>UP</string>
     </property>
@@ -163,6 +188,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>DOWN</string>
     </property>
@@ -173,11 +203,16 @@
    <widget class="QPushButton" name="Mani_up">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>340</y>
+      <x>540</x>
+      <y>60</y>
       <width>81</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>UP</string>
@@ -186,11 +221,16 @@
    <widget class="QPushButton" name="Mani_down">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>390</y>
+      <x>540</x>
+      <y>110</y>
       <width>81</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>DOWN</string>
@@ -265,8 +305,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>310</y>
+      <x>560</x>
+      <y>30</y>
       <width>41</width>
       <height>16</height>
      </rect>
@@ -286,18 +326,28 @@
       <x>20</x>
       <y>30</y>
       <width>301</width>
-      <height>341</height>
+      <height>361</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>380</y>
+      <y>420</y>
       <width>81</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Start</string>
@@ -307,10 +357,15 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>380</y>
+      <y>420</y>
       <width>81</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Load File</string>
