@@ -30,6 +30,7 @@ struct Encoder{
   char input;
   char input_old;
   long angle; 
+  long angle_old;
 } typedef encoder;
 
 encoder enc;
@@ -44,16 +45,19 @@ int init( void ){
 }
 
 void update(){
-   cout << "update anfang" << endl;
-   int phi;
-   shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
+ while(1){
+   if( enc.angle != enc.angle_old ){
+      shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
    
-   phi = shared_mem->phi_c;  //
-   if( phi > 960  )  // Rücksetzimpuls
-      enc.angle = 0;   
-   phi = enc.angle;   
-   shmdt(shared_mem); 
-   cout << "update ende" << endl;
+      if( enc.angle_old != shared_mem->phi_c )  // änderung von außen
+         enc.angle = shared_mem->phi_c;
+      else 
+         shared_mem->phi_c = enc.angle;  
+      shmdt(shared_mem); 
+      enc.angle_old = enc.angle;
+      }
+   usleep(1000);
+   }
    
 }
 
@@ -62,6 +66,7 @@ int main( int argc, const char* argv[] ){
    wiringPiSetup();
    init(  );
    shared_mem_id = shmget(SMkey, SMsize, 0666);
+   new thread( update );
 
    while(1){
 
@@ -80,9 +85,6 @@ int main( int argc, const char* argv[] ){
          if( enc.angle < 0 )   
             enc.angle = 960 + enc.angle;
 
-         cout << "starte thread" << endl;
-	       new thread( update );
-         
       }
       usleep(10);
    }

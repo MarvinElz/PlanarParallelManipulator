@@ -56,7 +56,7 @@ int main( int argc, const char* argv[] ){
    int *phi_soll;
    int *phi_ist;
 
-   
+   /*
    // TODO: Kalibrierung
    digitalWrite( PIN_mot1_dir, 0 );
    mot.speed = 10;
@@ -73,9 +73,9 @@ int main( int argc, const char* argv[] ){
       shmdt(shared_mem);
       usleep(100);
    }while( !licht_schranke );   
-   met.speed = 0;
+   mot.speed = 0;
    digitalWrite( PIN_mot1_dir, 1 );    
-
+*/
    while(1){
       shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
       
@@ -99,8 +99,8 @@ int main( int argc, const char* argv[] ){
          delta = - delta;
       }
       digitalWrite( PIN_mot1_dir, dir );
-      if( delta > 100 )
-         delta = 100;
+    //  if( delta > 100 )
+     //    delta = 100;
       mot.speed = delta;
       usleep(10000);  // 10ms warten
 

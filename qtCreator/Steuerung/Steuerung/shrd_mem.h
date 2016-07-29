@@ -12,6 +12,7 @@ struct shared_mem_struct{
    int phi_c_soll;     // SollPosition Gelenk 2
    char licht_b;       // Lichtschrankensensor Gelenk b
    char licht_c;       // Lichtschrankensensor Gelenk c
+   char UP;            // Stift (1: anheben, 0: senken)
 }typedef shared_mem_struct;
 
 

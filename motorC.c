@@ -73,7 +73,7 @@ int main( int argc, const char* argv[] ){
       shmdt(shared_mem);
       usleep(100);
    }while( !licht_schranke );   
-   met.speed = 0;
+   mot.speed = 0;
    digitalWrite( PIN_mot2_dir, 1 );  
 
 

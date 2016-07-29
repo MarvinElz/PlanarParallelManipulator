@@ -1,6 +1,6 @@
 #ifndef TRAJECTORY_H
 #define TRAJECTORY_H
-
+#include "shrd_mem.h"
 #include <QThread>
 #include <QListWidget>
 
@@ -17,6 +17,8 @@ public slots:
 private:
     QListWidget *list;
     void run();
+    int shared_mem_id;
+    shared_mem_struct * shared_mem;
 
 };
 

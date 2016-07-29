@@ -20,7 +20,7 @@ struct Zustand{
 } typedef Zustand;
 
 Zustand Automat[4] = {  
-  {  1, { 0, 1, 2, 3 } },   // rechtsdrehung
+        {  1, { 0, 1, 2, 3 } },   // rechtsdrehung
 	{  0, { 0, 1, 2, 3 } },   // linksdrehung
 	{  1, { 1, 0, 3, 2 } },   // rechtsdrehung
 	{  0, { 1, 0, 3, 2 } } }; // linksdrehung
@@ -30,6 +30,7 @@ struct Encoder{
   char input;
   char input_old;
   long angle; 
+  long angle_old;
 } typedef encoder;
 
 encoder enc;
@@ -44,16 +45,19 @@ int init( void ){
 }
 
 void update(){
-   cout << "update anfang" << endl;
-   int phi;
-   shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
+ while(1){
+   if( enc.angle != enc.angle_old ){
+      shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);  // Zugriff auf shared memory bekommen
    
-   phi = shared_mem->phi_b;  //
-   if( phi > 960  )  // Rücksetzimpuls
-      enc.angle = 0;   
-   phi = enc.angle;   
-   shmdt(shared_mem); 
-   cout << "update ende" << endl;
+      if( enc.angle_old != shared_mem->phi_b )  // änderung von außen
+         enc.angle = shared_mem->phi_b;
+      else 
+         shared_mem->phi_b = enc.angle;  
+      shmdt(shared_mem); 
+      enc.angle_old = enc.angle;
+      }
+   usleep(1000);
+   }
    
 }
 
@@ -63,11 +67,15 @@ int main( int argc, const char* argv[] ){
    init(  );
    shared_mem_id = shmget(SMkey, SMsize, 0666);
 
+   new thread( update );
+
    while(1){
 
       enc.input = digitalRead( enc1_a ) << 1 | digitalRead( enc1_b );       
+      
       if (enc.input != enc.input_old){    // wenn Änderung stattgefunden hat
-         enc.input_old = enc.input;       // Eingabe speichern für Abgleich    
+         enc.input_old = enc.input;       // Eingabe speichern für Abgleich   
+         cout << (int)enc.input << endl; 
          enc.state = Automat[enc.state].ai[enc.input]; // neuer Zustand wird aus dem Automaten ermittelt              
                   
          if( Automat[enc.state].outValue )
@@ -80,8 +88,7 @@ int main( int argc, const char* argv[] ){
          if( enc.angle < 0 )   
             enc.angle = 960 + enc.angle;
 
-         cout << "starte thread" << endl;
-	       new thread( update );
+	 
          
       }
       usleep(10);
