@@ -14,12 +14,12 @@ void init(){
 
 void run(){
 	while(1){
-		digitslWrite( PIN_stift, 1 );
+		digitalWrite( PIN_stift, 1 );
 		if( pos )
 		   usleep(1000);
 		else
 		   usleep(2000);
-		digitslWrite( PIN_stift, 0 );   
+		digitalWrite( PIN_stift, 0 );   
 		usleep(20000);
 	}
 }
