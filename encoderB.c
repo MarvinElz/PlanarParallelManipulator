@@ -75,7 +75,7 @@ int main( int argc, const char* argv[] ){
       
       if (enc.input != enc.input_old){    // wenn Änderung stattgefunden hat
          enc.input_old = enc.input;       // Eingabe speichern für Abgleich   
-         cout << (int)enc.input << endl; 
+         //cout << (int)enc.input << endl; 
          enc.state = Automat[enc.state].ai[enc.input]; // neuer Zustand wird aus dem Automaten ermittelt              
                   
          if( Automat[enc.state].outValue )
