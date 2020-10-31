@@ -57,7 +57,6 @@ int init( int motNr ){
 
 void run(){
    unsigned long delta;
-   if( mot.speed > 100 ) mot.speed = 100;
    while(1){   	  
       if( mot.speed != 0 ){
          delta = 200000 / mot.speed;      // speed [0..100] -> f = 2.5Hz .. 250Hz
@@ -66,7 +65,7 @@ void run(){
          digitalWrite( PIN_mot_step, HIGH );
          usleep( delta );
       }else
-         usleep(1000);     
+         usleep(10);     
                     
    }
 } 
@@ -130,7 +129,7 @@ int main( int argc, const char* argv[] ){
       if( delta > 100 )
          delta = 100;
       mot.speed = delta;
-      usleep(10000);  // 10ms warten
+      usleep(100);  // 10ms warten
    }
 
 }

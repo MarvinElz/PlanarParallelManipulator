@@ -64,8 +64,8 @@ void MainWindow::on_b_reset_B_clicked()
    shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
    shared_mem->phi_b      = atoi( ui->l_b_ist->text().toStdString().c_str() );
    shared_mem->phi_b_soll = atoi( ui->l_b_soll->text().toStdString().c_str() );
-   if( shared_mem->phi_b      >= 960 || shared_mem->phi_b      < 0) shared_mem->phi_b      = 0;
-   if( shared_mem->phi_b_soll >= 960 || shared_mem->phi_b_soll < 0) shared_mem->phi_b_soll = 0;
+  // if( shared_mem->phi_b      >= 960 || shared_mem->phi_b      < 0) shared_mem->phi_b      = 0;
+  // if( shared_mem->phi_b_soll >= 960 || shared_mem->phi_b_soll < 0) shared_mem->phi_b_soll = 0;
    shmdt(shared_mem);
 }
 
@@ -74,8 +74,8 @@ void MainWindow::on_b_reset_C_clicked()
    shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
    shared_mem->phi_c      = atoi( ui->l_c_ist->text().toStdString().c_str() );
    shared_mem->phi_c_soll = atoi( ui->l_c_soll->text().toStdString().c_str() );
-   if( shared_mem->phi_c      >= 960 || shared_mem->phi_c      < 0) shared_mem->phi_c      = 0;
-   if( shared_mem->phi_c_soll >= 960 || shared_mem->phi_c_soll < 0) shared_mem->phi_c_soll = 0;
+  // if( shared_mem->phi_c      >= 960 || shared_mem->phi_c      < 0) shared_mem->phi_c      = 0;
+  // if( shared_mem->phi_c_soll >= 960 || shared_mem->phi_c_soll < 0) shared_mem->phi_c_soll = 0;
    shmdt(shared_mem);
 }
 
@@ -83,7 +83,7 @@ void MainWindow::on_b_B_up_pressed()
 {
     shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
     shared_mem->phi_b_soll++;
-    if( shared_mem->phi_b_soll >= 960 ) shared_mem->phi_b_soll = 0;
+   // if( shared_mem->phi_b_soll >= 960 ) shared_mem->phi_b_soll = 0;
     shmdt(shared_mem);
 }
 
@@ -91,7 +91,7 @@ void MainWindow::on_b_B_down_pressed()
 {
     shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
     shared_mem->phi_b_soll--;
-    if( shared_mem->phi_b_soll < 0 ) shared_mem->phi_b_soll = 959;
+   // if( shared_mem->phi_b_soll < 0 ) shared_mem->phi_b_soll = 959;
     shmdt(shared_mem);
 }
 
@@ -99,7 +99,7 @@ void MainWindow::on_b_C_up_pressed()
 {
     shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
     shared_mem->phi_c_soll++;
-    if( shared_mem->phi_c_soll >= 960 ) shared_mem->phi_c_soll = 0;
+   // if( shared_mem->phi_c_soll >= 960 ) shared_mem->phi_c_soll = 0;
     shmdt(shared_mem);
 }
 
@@ -107,7 +107,7 @@ void MainWindow::on_b_C_down_pressed()
 {
     shared_mem = (shared_mem_struct*)shmat(shared_mem_id, 0, 0);
     shared_mem->phi_c_soll--;
-    if( shared_mem->phi_c_soll < 0 ) shared_mem->phi_c_soll = 959;
+   // if( shared_mem->phi_c_soll < 0 ) shared_mem->phi_c_soll = 959;
     shmdt(shared_mem);
 }
 

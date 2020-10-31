@@ -78,7 +78,7 @@ void update(){
          shmdt(shared_mem); 
          enc.angle_old = enc.angle;
       }
-   usleep(1000);
+   usleep(10);
    }
    
 }
@@ -120,7 +120,7 @@ int main( int argc, const char* argv[] ){
 
    while(1){
 
-      enc.input = digitalRead( enc1_a ) << 1 | digitalRead( enc1_b );       
+      enc.input = digitalRead( enc_a ) << 1 | digitalRead( enc_b );       
       
       if (enc.input != enc.input_old){    // wenn Änderung stattgefunden hat
          enc.input_old = enc.input;       // Eingabe speichern für Abgleich   
@@ -131,12 +131,12 @@ int main( int argc, const char* argv[] ){
             enc.angle++;        
          else
             enc.angle--; 
-
+/*
          if( enc.angle >= 960 )
             enc.angle = 960 - enc.angle;
          if( enc.angle < 0 )   
             enc.angle = 960 + enc.angle;
-
+*/
 	 
          
       }
